@@ -3,76 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trinity Prep Tutor - Login</title>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <title>Login - Trinity Prep Tutor</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f7f7f7;
       display: flex;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      background-color: #f8f9fa;
-    }
-
-    .container {
-      text-align: center;
-    }
-
-    h1 {
-      margin-bottom: 30px;
-    }
-
-    .google-signin-btn {
-      display: inline-block;
-      background-color: #4285f4;
-      color: white;
-      width: 191px;
-      border-radius: 2px;
-      box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
-      transition: all 0.218s;
-      font-size: 14px;
-      font-weight: 500;
-      text-align: center;
+      justify-content: center;
+      min-height: 100vh;
       margin: 0;
-      vertical-align: middle;
-      line-height: 42px;
     }
-
-    .google-signin-btn:hover {
-      box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
-      cursor: pointer;
+    .login-container {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    }
+    h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Trinity Prep Tutor</h1>
-    <div class="google-signin-btn" role="button" tabindex="0">
-      <span class="icon"></span>
-      <span class="buttonText">Sign in with Google</span>
-    </div>
+  <div class="login-container">
+    <h2>Login with Google</h2>
+    <div id="g-signin2"></div>
   </div>
+
+  <!-- Load Google API library -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!-- Initialize Google OAuth -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      gapi.load('auth2', () => {
+    function onSuccess(googleUser) {
+      // Send the user token to your server for authentication or save it for future use
+      var id_token = googleUser.getAuthResponse().id_token;
+
+      // Redirect to the success page after successful authentication
+      window.location.href = "https://trinityprep.net/success";
+    }
+
+    function onFailure(error) {
+      console.log(error);
+    }
+
+    function renderButton() {
+      gapi.signin2.render('g-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+
+    (function(){
+      // Initialize Google OAuth with your client ID
+      gapi.load('auth2', function() {
         gapi.auth2.init({
-          client_id: '102426587603-n2i8loj039dntdl0l4tcqfadtqpqjb3q.apps.googleusercontent.com',
-          scope: 'profile email'
-        }).then(() => {
-          const auth2 = gapi.auth2.getAuthInstance();
-          const button = document.querySelector('.google-signin-btn');
-          auth2.attachClickHandler(button, {}, onSignIn);
+          client_id: '102426587603-n2i8loj039dntdl0l4tcqfadtqpqjb3q.apps.googleusercontent.com'
+        }).then(function(){
+          renderButton();
         });
       });
-    });
-
-    function onSignIn(googleUser) {
-      const id_token = googleUser.getAuthResponse().id_token;
-      localStorage.setItem('id_token', id_token);
-      window.location.href = 'https://trinitypreptutor.net/success';
-    }
+    })();
   </script>
 </body>
 </html>
-``
