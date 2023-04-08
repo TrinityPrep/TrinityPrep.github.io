@@ -53,3 +53,25 @@
       <span class="buttonText">Sign in with Google</span>
     </div>
   </div>
+  <script>
+    function init() {
+      gapi.load('auth2', () => {
+        gapi.auth2.init({
+          client_id: '102426587603-n2i8loj039dntdl0l4tcqfadtqpqjb3q.apps.googleusercontent.com',
+          scope: 'profile email'
+        }).then(() => {
+          const auth2 = gapi.auth2.getAuthInstance();
+          const button = document.querySelector('.google-signin-btn');
+          auth2.attachClickHandler(button, {}, onSignIn);
+        });
+      });
+    }
+
+    function onSignIn(googleUser) {
+      const id_token = googleUser.getAuthResponse().id_token;
+      localStorage.setItem('id_token', id_token);
+      window.location.href = 'https://trinitypreptutor.net/success';
+    }
+  </script>
+</body>
+</html>
