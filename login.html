@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trinity Prep Tutor - Login</title>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://apis.google.com/js/platform.js" onload="init()"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -54,7 +54,7 @@
     </div>
   </div>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    function init() {
       gapi.load('auth2', () => {
         gapi.auth2.init({
           client_id: '102426587603-n2i8loj039dntdl0l4tcqfadtqpqjb3q.apps.googleusercontent.com',
@@ -65,7 +65,7 @@
           auth2.attachClickHandler(button, {}, onSignIn);
         });
       });
-    });
+    }
 
     function onSignIn(googleUser) {
       const id_token = googleUser.getAuthResponse().id_token;
@@ -75,4 +75,3 @@
   </script>
 </body>
 </html>
-``
