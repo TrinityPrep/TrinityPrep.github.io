@@ -1,40 +1,78 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <script src="https://unpkg.com/whatwg-fetch@3.6.2/dist/fetch.umd.js"></script>\
-    <title>Login | Trinity Prep Tutor</title>
-    <meta name="google-signin-client_id" content="102426587603-n2i8loj039dntdl0l4tcqfadtqpqjb3q.apps.googleusercontent.com">
-    <script>
-      function onSignIn(googleUser) {
-        var id_token = googleUser.getAuthResponse().id_token;
-        var profile = googleUser.getBasicProfile();
-    function onSignIn(googleUser) {
-  var id_token = googleUser.getAuthResponse().id_token;
-
-        // Send the ID token to your server for authentication and further processing
-        // This could be done with an AJAX request, for example
-        console.log(id_token);
-        console.log(profile.getName());
-      }
-  fetch('https://your-cloud-function-url', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ id_token: id_token })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      // If the login was successful, redirect to the success page
-      window.location.href = 'https://trinitypreptutor.net/success?success=true';
-    } else {
-      // If the login was not successful, display an error message
-      alert('An error occurred while processing your login. Please try again.');
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trinity Prep Tutor - Login</title>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f8f9fa;
     }
-  })
-  .catch(error => console.error(error));
-}
-    </script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-  </head>
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .google-signin-btn {
+      display: inline-block;
+      background-color: #4285f4;
+      color: white;
+      width: 191px;
+      border-radius: 2px;
+      box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+      transition: all 0.218s;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      margin: 0;
+      vertical-align: middle;
+      line-height: 42px;
+    }
+
+    .google-signin-btn:hover {
+      box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Trinity Prep Tutor</h1>
+    <div class="google-signin-btn" role="button" tabindex="0">
+      <span class="icon"></span>
+      <span class="buttonText">Sign in with Google</span>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      gapi.load('auth2', () => {
+        gapi.auth2.init({
+          client_id: '102426587603-n2i8loj039dntdl0l4tcqfadtqpqjb3q.apps.googleusercontent.com',
+          scope: 'profile email'
+        }).then(() => {
+          const auth2 = gapi.auth2.getAuthInstance();
+          const button = document.querySelector('.google-signin-btn');
+          auth2.attachClickHandler(button, {}, onSignIn);
+        });
+      });
+    });
+
+    function onSignIn(googleUser) {
+      const id_token = googleUser.getAuthResponse().id_token;
+      localStorage.setItem('id_token', id_token);
+      window.location.href = 'https://trinitypreptutor.net/success';
+    }
+  </script>
+</body>
+</html>
+``
