@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="google-signin-client_id" content="102426587603-n2i8loj039dntdl0l4tcqfadtqpqjb3q.apps.googleusercontent.com">
   <title>Trinity Prep Tutor - Login</title>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <style>
@@ -25,12 +24,25 @@
     }
   </style>
 </head>
-<body>
+<body onload="init()">
   <div class="container">
     <h1>Trinity Prep Tutor</h1>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <div class="g-signin2"></div>
   </div>
   <script>
+    function init() {
+      gapi.load('auth2', () => {
+        gapi.auth2.init({
+          client_id: '102426587603-n2i8loj039dntdl0l4tcqfadtqpqjb3q.apps.googleusercontent.com',
+          scope: 'profile email'
+        }).then(() => {
+          const auth2 = gapi.auth2.getAuthInstance();
+          const button = document.querySelector('.g-signin2');
+          auth2.attachClickHandler(button, {}, onSignIn);
+        });
+      });
+    }
+
     function onSignIn(googleUser) {
       const id_token = googleUser.getAuthResponse().id_token;
       localStorage.setItem('id_token', id_token);
