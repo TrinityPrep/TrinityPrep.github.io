@@ -45,7 +45,7 @@
     }
   </style>
 </head>
-<body onload="init()">
+<body>
   <div class="container">
     <h1>Trinity Prep Tutor</h1>
     <div class="google-signin-btn" role="button" tabindex="0">
@@ -54,7 +54,7 @@
     </div>
   </div>
   <script>
-    function init() {
+    document.addEventListener('DOMContentLoaded', () => {
       gapi.load('auth2', () => {
         gapi.auth2.init({
           client_id: '102426587603-n2i8loj039dntdl0l4tcqfadtqpqjb3q.apps.googleusercontent.com',
@@ -65,7 +65,7 @@
           auth2.attachClickHandler(button, {}, onSignIn);
         });
       });
-    }
+    });
 
     function onSignIn(googleUser) {
       const id_token = googleUser.getAuthResponse().id_token;
@@ -75,3 +75,4 @@
   </script>
 </body>
 </html>
+``
