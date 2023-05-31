@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>Trinity Prep Tutor</title>
@@ -6,7 +7,8 @@
     .header {text-align: center; padding: 20px; background-color: #23374d; color: white;}
     .main-content {padding: 20px;}
     .subject-list {list-style: none; padding: 0;}
-    .subject-list li {padding: 10px; background-color: #f2a901; margin-bottom: 10px; color: white; border-radius: 5px;}
+    .subject-item {padding: 10px; background-color: #f2a901; margin-bottom: 10px; color: white; border-radius: 5px; cursor: pointer;}
+    .subject-content {display: none; margin: 10px 0; padding: 10px; background-color: #d1e8e2; border-radius: 5px;}
     .footer {text-align: center; padding: 20px; background-color: #23374d; color: white; position: fixed; bottom: 0; width: 100%;}
     a {color: #f2a901;}
   </style>
@@ -20,16 +22,35 @@
   
   <div class="main-content">
     <h2>About Us</h2>
-    <p>At Trinity Prep Tutor, we offer high-quality, personalized online tutoring for high school students across a wide array of subjects. Our mission is to guide you towards academic excellence and help unlock your full potential. You can rest assured knowing your tutors not only passed the rigorous cirriculum of Trinity Prep, but succeeded as well, allowing for a personalized tutoring experience. All of our tutors graduated at the top of their respective classes and you can rest assured knowing there is no one more qualified more than our tutors.</p>
+    <p>At Trinity Prep Tutor, we offer high-quality, personalized online tutoring for high school students across a wide array of subjects. Our mission is to guide you towards academic excellence and help unlock your full potential. You can rest assured knowing your tutors not only passed the rigorous curriculum of Trinity Prep, but succeeded as well, allowing for a personalized tutoring experience. All of our tutors graduated at the top of their respective classes and you can rest assured knowing there is no one more qualified than our tutors.</p>
 
     <h2>Our Subjects</h2>
     <ul class="subject-list">
-      <li>Mathematics</li>
-      <li>Science</li>
-      <li>English</li>
-      <li>History</li>
-      <li>SAT and ACT</li>
-      <!-- You can add more subjects here -->
+      <li class="subject-item">Mathematics
+        <div class="subject-content">
+          <p>Details about Mathematics tutoring...</p>
+        </div>
+      </li>
+      <li class="subject-item">Science
+        <div class="subject-content">
+          <p>Details about Science tutoring...</p>
+        </div>
+      </li>
+      <li class="subject-item">English
+        <div class="subject-content">
+          <p>Details about English tutoring...</p>
+        </div>
+      </li>
+      <li class="subject-item">History
+        <div class="subject-content">
+          <p>Details about History tutoring...</p>
+        </div>
+      </li>
+      <li class="subject-item">SAT and ACT
+        <div class="subject-content">
+          <p>Details about SAT and ACT tutoring...</p>
+        </div>
+      </li>
     </ul>
 
     <h2>Contact Us</h2>
@@ -39,5 +60,9 @@
   <div class="footer">
     <p>&copy; 2023 Trinity Prep Tutor. All rights reserved.</p>
   </div>
-</body>
-</html>
+
+  <script>
+    var items = document.getElementsByClassName('subject-item');
+
+    for(var i = 0; i < items.length; i++) {
+      items[i].addEventListener('click
